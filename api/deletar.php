@@ -1,0 +1,54 @@
+<?php
+
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: Application/json; charset=UTF-8");
+
+include_once '../config/conexao.php';
+
+$json_front = file_get_contents("php://input");
+$dados = json_decode($json_front, true);
+
+$dados_id = $dados["id"];
+
+$sql = "SELECT * FROM contatos WHERE id = :id";
+$buscador = $conn->prepare($sql);
+$buscador->bindParam(':id', $dados_id, PDO::PARAM_INT);
+$buscador->execute();
+
+$resultado = $buscador->fetch(PDO::FETCH_ASSOC);
+
+
+
+if($buscador->rowCount() != 0){
+
+    $sql_exclusao = "DELETE FROM contatos WHERE id = :idAlvo";
+    $exclusor = $conn->prepare($sql_exclusao);
+    $exclusor->bindParam(':idAlvo', $resultado["id"],PDO::PARAM_INT);
+   $resultado_exclusao = $exclusor->execute();
+
+    if($exclusor->rowCount() != 0){
+    
+    $response = [
+        "Erro" => false,
+        "Mensagem" => "Dados excluidos com sucesso",
+        "id" => $resultado["id"] ?? null,
+        "nome" => $resultado["nome"] ?? null,
+        "telefone" => $resultado["telefone"] ?? null
+    ];
+    }else{
+        $response =[
+            "Erro" => true,
+            "Mensagem" => "Erro ao tentar excluir id:".($resultado["id"] ?? null)." e nome: ". ($resultado["nome"] != '' ? $resultado["nome"] :'Sem Nome' )
+        ];
+    }
+    
+
+}else{
+    $response = [
+        "Erro" => true,
+        "Mensagem" => "Id não encontrado"
+    ];
+}
+
+http_response_code(200);
+echo json_encode($response);
