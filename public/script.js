@@ -19,6 +19,7 @@ formulario.addEventListener("click", (e) =>{
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: "include",
         body: JSON.stringify(dados),
     })
     .then(data => console.log(data.json()));

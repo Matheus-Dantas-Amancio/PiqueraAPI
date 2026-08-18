@@ -15,17 +15,19 @@
         <div id="quadro">
             <div class="d-flex justify-content-center mt-2 text-white"><h3>Login</h3></div>
             <div id="div-inf" class="mt-5">
-                <input type="text" name="" id="" placeholder="Usuario">
-                <input type="text" name="" id="" placeholder="Senha">
+                <input type="text" name="" id="usuario" placeholder="Usuario">
+                <input type="text" name="" id="senha" placeholder="Senha">
             </div>
             <div class="d-flex justify-content-center mt-2 text-white">
-                <button>Entrar</button>
+                <button id="entrar">Entrar</button>
             </div>
             <div class="d-flex justify-content-center mt-2 text-white">
                 <p><a href="">Ainda não tem conta?</a></p>
             </div>
         </div>
     </div>
+    
+    <script src="login.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>
