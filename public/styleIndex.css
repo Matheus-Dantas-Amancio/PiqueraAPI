@@ -1,0 +1,49 @@
+body{
+    background-color:#5D37E6 !important;
+     font-family: "Source Serif 4", serif !important;
+}
+h1{
+    padding-top: 3%;
+    color: aliceblue !important;
+    font-weight: 700 !important;
+
+}
+
+#tab{
+    margin-top: 7%;
+    height: 55svh;
+    width: 60vw;
+    border-radius: 20px;
+    background-color: black;
+    opacity: 90%;
+    box-shadow: 3px 5px 10px aliceblue ;
+}
+
+#salvar{
+    border: none;
+    background-color: #5D37E6;
+    color: aliceblue;
+    border-radius: 15px;
+    padding: 0.5%;
+    transition: all ease-in 0.3s;
+}
+
+#salvar:hover{
+    color: black;
+    background-color: rgb(10, 250, 1);
+}
+
+#nome, #telefone{
+    width: 90%;
+    border: 0;
+    background: none;
+    border-bottom: 2px white solid !important;
+    outline: none;
+    color: aliceblue;
+    margin-bottom: 10%;    
+}
+
+#cadastrar-tab, #buscar-tab{
+    color: #5D37E6;
+    font-weight: 700 !important;
+}

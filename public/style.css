@@ -1,5 +1,5 @@
 body{
-    background-color: #5D37E6;
+    background-color: #5D37E6 !important;
      font-family: "Source Serif 4", serif;
 }
 
@@ -8,8 +8,9 @@ body{
     width: 40vw;
     border-radius: 20px;
     background-color: black;
-    opacity: 65%;
+    opacity: 80%;
 }
+
 
 #div-inf input
 {
