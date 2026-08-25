@@ -8,8 +8,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-       <link rel="stylesheet" href="styleIndex.css">
-        <title>API</title>
+    <link rel="stylesheet" href="styleIndex.css">
+    <title>API</title>
 </head>
 
 <body>
@@ -23,8 +23,8 @@
         </div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="cadastrar-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
-                    role="tab" aria-controls="home" aria-selected="true">Cadastrar</button>
+                <button class="nav-link active" id="cadastrar-tab" data-bs-toggle="tab" data-bs-target="#home"
+                    type="button" role="tab" aria-controls="home" aria-selected="true">Cadastrar</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="buscar-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
@@ -44,16 +44,34 @@
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                 <div class="row mt-5">
-                <div class="col-md-10 d-flex justify-content-center align-items-center">
-                     <input type="text" placeholder="Digite um nome" id="buscarContatos">
+                    <div class="col-md-10 d-flex justify-content-center align-items-center">
+                        <input type="text" placeholder="Digite um nome" id="buscarContatos">
                     </div>
-                <div class="col-md-2 d-flex justify-content-center align-items-center">
-                    <button id="buscar">buscar</button></div>
+                    <div class="col-md-2 d-flex justify-content-center align-items-center">
+                        <button id="buscar">buscar</button>
+                    </div>
                 </div>
 
+
+                <div class="container mt-5" id="div-telefones">
+                    <table class="" id="tabela-telefones">
+                        <thead>
+                            <tr>
+                                <td>Id</td>
+                                <td>Nome</td>
+                                <td>Telefone</td>
+                                <td>Ações</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+
 
 
 

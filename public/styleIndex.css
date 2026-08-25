@@ -11,7 +11,8 @@ h1{
 
 #tab{
     margin-top: 7%;
-    height: 55svh;
+    height: auto;
+    min-height: 55vh;
     width: 60vw;
     border-radius: 20px;
     background-color: black;
@@ -71,6 +72,39 @@ h1{
     font-weight: 700 !important;
 }
 
-i{
 
+#div-telefones{
+    background: none !important;
+    width: 100% !important;
+    
+}
+
+
+
+#tabela-telefones {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    color: aliceblue;
+    margin-bottom: 5%;
+}
+
+#tabela-telefones thead {
+    width: 100%;
+}
+
+#tabela-telefones thead tr {
+    width: 100%;
+    border: 2px solid #5D37E6;
+}
+
+#tabela-telefones tbody {
+    width: 100%;
+}
+
+#tabela-telefones th,
+#tabela-telefones td {
+     border: 2px solid #5D37E6;
+    text-align: center;
+    padding: 4px;
 }
