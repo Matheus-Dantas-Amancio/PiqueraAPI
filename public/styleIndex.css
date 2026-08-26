@@ -108,3 +108,18 @@ h1{
     text-align: center;
     padding: 4px;
 }
+
+#modal-edicao-contato{
+    background-color: black !important;
+    border: #5D37E6 solid 2px;
+}
+
+#input-nome-modal, #input-telefone-modal{
+    width: 100%;
+    border: 0;
+    background: none;
+    border-bottom: 2px white solid !important;
+    outline: none;
+    color: aliceblue;
+    margin-bottom: 10%;    
+}
