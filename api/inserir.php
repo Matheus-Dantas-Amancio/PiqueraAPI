@@ -25,27 +25,30 @@ if($dados && !$dados_existentes['Erro']){
     $produtos_cad->execute();
 
     if($produtos_cad->rowCount()){
-        $retorno [] =[
-            "Erro" => false,
-            "Mensagem" => "Dados cadastrados com Sucesso!"
+        http_response_code(200);
+        $retorno =[
+            "erro" => false,
+            "mensagem" => "Dados cadastrados com Sucesso!"
          
         ];
     }else{
-        $retorno [] =
+        http_response_code(500);
+        $retorno =
         [
-            "Erro" => true,
-            "Menssagem" => "Produto não foi cadastrado"
+            "erro" => true,
+            "mensagem" => "Produto não foi cadastrado"
         ];
     }
 
 }else{
-    $retorno [] =
+    http_response_code(401);
+    $retorno =
     [
-        "Erro" => true,
-        "Mensagem" => "Sem dados necessário enviar preechido",
-        "Resposta" => $dados_existentes['Menssagem']
+        "erro" => true,
+        "mensagem" => "Sem dados necessário enviar preechido",
+        "resposta" => $dados_existentes['Menssagem']
     ];
 }
 
-http_response_code(200);
+
 echo json_encode($retorno);

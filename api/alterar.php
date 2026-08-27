@@ -41,8 +41,8 @@ if (!$result_validar["Erro"]) {
         if ($result_update) {
             $result =
                 [
-                    "Erro:" => false,
-                    "Mensagem: " => "Dados Alterados com sucesso",
+                    "erro" => false,
+                    "mensagem" => "Dados Alterados com sucesso",
                     "id" => $dados_id,
                     "nome" => $dados_nome,
                     "telefone" => $dados_telefone
@@ -50,22 +50,22 @@ if (!$result_validar["Erro"]) {
         } else {
             $result =
                 [
-                    "Erro" => true,
-                    "Menssagem" => "Houve um erro ao tentar realizar a alteração do registro no sistema"
+                    "erro" => true,
+                    "menssagem" => "Houve um erro ao tentar realizar a alteração do registro no sistema"
                 ];
         }
     } else {
         $result =
             [
-                "Erro:" => false,
-                "Menssagem" => "Registro não encontrado"
+                "erro:" => false,
+                "menssagem" => "Registro não encontrado"
             ];
     }
 } else {
     $result = [
-        "Erro" => true,
-        "Menssagem" =>  "Sem dados necessário enviar preechido",
-        "Resposta" => $result_validar['Menssagem']
+        "erro" => true,
+        "mensagem" =>  "Sem dados necessário enviar preechido",
+        "resposta" => $result_validar['Menssagem']
     ];
 }
 

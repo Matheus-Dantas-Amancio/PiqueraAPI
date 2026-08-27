@@ -123,3 +123,8 @@ h1{
     color: aliceblue;
     margin-bottom: 10%;    
 }
+
+#meuToast{
+    background-color: black !important;
+    border: #2a00c4 2px solid !important;
+}

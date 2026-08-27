@@ -1,9 +1,17 @@
 
+function mostrarToast(mensagem){
+    const elementoToast = document.getElementById("meuToast");
+    document.getElementById("toastMensagem").textContent = mensagem;
+    const toast = bootstrap.Toast.getOrCreateInstance(elementoToast);
+
+    toast.show();
+}
+
 const formulario = document.querySelector("#salvar");
 
-formulario.addEventListener("click", (e) => {
+formulario.addEventListener("click", async (e) => {
 
-
+e.preventDefault();
     const nome = document.getElementById('nome').value;
     const telefone = document.getElementById('telefone').value;
 
@@ -12,15 +20,35 @@ formulario.addEventListener("click", (e) => {
         telefone: telefone
     };
 
-    fetch('http://localhost/piqueraapi/api/inserir.php', {
+    try{
+        retornoCadastrar = await fetch('http://localhost/piqueraapi/api/inserir.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         credentials: "include",
         body: JSON.stringify(dados),
-    })
-        .then(data => console.log(data.json()));
+    });
+
+
+
+       
+        const respostaCadastrar = await retornoCadastrar.json();
+
+        if (!retornoCadastrar.ok) {
+            mostrarToast(respostaCadastrar.mensagem);
+            return;
+        }
+
+        mostrarToast(respostaCadastrar.mensagem);
+        document.getElementById('nome').value ="";
+        document.getElementById('telefone').value ="";
+
+    }catch(erro){
+        console.error("Erro na requisição:", erro);
+        mostrarToast(resposta.mensagem);
+    }
+     
 
 });
 
@@ -95,43 +123,57 @@ async function carregarDadosEdicao(botao) {
 }
 
 
-
-async function alterarDados(){
+async function alterarDados() {
 
     const nomeEditar = document.getElementById("input-nome-modal").value;
     const telefoneEditar = document.getElementById("input-telefone-modal").value;
-   
+
 
     const modalEdicao = document.getElementById("modal-confirmar"); // realizar a busca pelo modal que tem o ID do cliente
     const id = modalEdicao.dataset.id;
 
-    const dados ={
+    const dados = {
         id: id,
         nome: nomeEditar,
         telefone: telefoneEditar
     };
 
 
-    const retorno = await fetch(`http://localhost/piqueraapi/api/alterar.php`, {
-        method: 'PUT',
-        credentials: "include",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dados)
-    });
 
-    const resposta = await retorno.json();
+    try {
+        const retorno = await fetch(`http://localhost/piqueraapi/api/alterar.php`, {
+            method: 'PUT',
+            credentials: "include",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dados)
+        });
+        
+        const resposta = await retorno.json();
 
-    if(!retorno.ok){
-        console.error("Erro HTTP: ", retorno.status);
-        console.error(resposta);
-        return;
+        if (!retorno.ok) {
+
+            mostrarToast(resposta.mensagem);
+            return;
+        }
+
+        const elementoModal = document.getElementById("modal-confirmar");
+        const modal = bootstrap.Modal.getInstance(elementoModal);
+
+        modal.hide();
+        console.log(resposta.mensagem);
+        mostrarToast(resposta.mensagem);
+        
+
+    } catch (erro) {
+         console.error("Erro na requisição:", erro);
+
+        mostrarToast(resposta.mensagem);
     }
 
-    console.log("Sucesso:", resposta);
-
 }
+
 
 
 
