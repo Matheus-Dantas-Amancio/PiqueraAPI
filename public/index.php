@@ -1,3 +1,14 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: login.php');
+    exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -48,7 +59,7 @@
                         <input type="text" placeholder="Digite um nome" id="buscarContatos">
                     </div>
                     <div class="col-md-2 d-flex justify-content-center align-items-center">
-                        <button id="buscar">buscar</button>
+                        <button id="buscar" onclick="buscarDados()">buscar</button>
                     </div>
                 </div>
 
@@ -92,9 +103,9 @@
                 </div>
                 <div class="modal-body">
                     <label for="">Nome</label>
-                    <input type="text" id="input-nome-modal">
+                    <input type="text" id="input-nome-modal" required>
                     <label for="">Telefone</label>
-                    <input type="text" id="input-telefone-modal">
+                    <input type="text" id="input-telefone-modal" required>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -117,6 +128,23 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-primary" onclick="alterarDados()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modal-confirmar-exclusao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" id="modal-edicao-contato">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tem certeza que deseja Excluir esse contato?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="excluirContato()">Excluir</button>
                 </div>
             </div>
         </div>

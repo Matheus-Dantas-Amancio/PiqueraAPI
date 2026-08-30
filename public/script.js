@@ -1,5 +1,4 @@
-
-function mostrarToast(mensagem){
+function mostrarToast(mensagem) {
     const elementoToast = document.getElementById("meuToast");
     document.getElementById("toastMensagem").textContent = mensagem;
     const toast = bootstrap.Toast.getOrCreateInstance(elementoToast);
@@ -7,32 +6,45 @@ function mostrarToast(mensagem){
     toast.show();
 }
 
+let idParaExcluir;
+
+function pegarId(botao) {
+    const tr = botao.closest("tr");
+    idParaExcluir = tr.dataset.id;
+}
+
 const formulario = document.querySelector("#salvar");
 
 formulario.addEventListener("click", async (e) => {
 
-e.preventDefault();
+    e.preventDefault();
     const nome = document.getElementById('nome').value;
     const telefone = document.getElementById('telefone').value;
+
+    const inputNome = document.getElementById('nome');
+    const inputTelefone = document.getElementById('telefone');
+
+    if (!inputNome.value.trim() || !inputTelefone.value.trim()) {
+
+        mostrarToast("Preencha todos os dados corretamente!");
+        return;
+    }
 
     const dados = {
         nome: nome,
         telefone: telefone
     };
 
-    try{
+    try {
         retornoCadastrar = await fetch('http://localhost/piqueraapi/api/inserir.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: "include",
-        body: JSON.stringify(dados),
-    });
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: "include",
+            body: JSON.stringify(dados),
+        });
 
-
-
-       
         const respostaCadastrar = await retornoCadastrar.json();
 
         if (!retornoCadastrar.ok) {
@@ -41,48 +53,53 @@ e.preventDefault();
         }
 
         mostrarToast(respostaCadastrar.mensagem);
-        document.getElementById('nome').value ="";
-        document.getElementById('telefone').value ="";
+        document.getElementById('nome').value = "";
+        document.getElementById('telefone').value = "";
 
-    }catch(erro){
-        console.error("Erro na requisição:", erro);
-        mostrarToast(resposta.mensagem);
+    } catch (erro) {
+        mostrarToast(erro);
     }
-     
+
 
 });
 
 
-const buscar = document.querySelector("#buscar");
-
-buscar.addEventListener("click", async (e) => {
+async function buscarDados() {
     const nomeLista = document.getElementById("buscarContatos").value;
 
     const parametros = new URLSearchParams({
         nome: nomeLista
     });
 
-    await fetch(`http://localhost/piqueraapi/api/listar.php?${parametros}`, {
-        method: 'GET',
-        credentials: "include"
-    })
-        .then(dados => dados.json())
-        .then(data => {
-            console.log(data);
-            const tBody = document.querySelector("tbody");
-            tBody.innerHTML = "";
+    try {
+        const resposta = await fetch(`http://localhost/piqueraapi/api/listar.php?${parametros}`, {
+            method: 'GET',
+            credentials: "include"
+        });
 
-            data.forEach(contato => {
-                const tr = document.createElement("tr");
+        const retorno = await resposta.json();
+        
+        if (!Array.isArray(retorno)) {
+            mostrarToast(retorno.mensagem);
+            return;
+        }
 
-                tr.dataset.id = contato.id;
+        console.log(retorno);
 
-                tr.innerHTML += `
+        const tBody = document.querySelector("tbody");
+        tBody.innerHTML = "";
+
+        retorno.forEach(contato => {
+            const tr = document.createElement("tr");
+
+            tr.dataset.id = contato.id;
+
+            tr.innerHTML += `
                 <td>${contato.id}</td>
                 <td>${contato.nome}</td>
                 <td>${contato.telefone}</td>
                 <td>
-                <button class="btn btn-outline-danger btn-sm">
+                <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-confirmar-exclusao" onclick="pegarId(this)">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                 </button> 
                 <button type="button" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modal-edicao" onclick="carregarDadosEdicao(this)">
@@ -90,12 +107,15 @@ buscar.addEventListener("click", async (e) => {
                 </button> </td>
             `;
 
-                tBody.appendChild(tr);
-            });
-
+            tBody.appendChild(tr);
         });
 
-});
+    } catch (error) {
+        mostrarToast(error);
+    }
+}
+
+
 
 
 async function carregarDadosEdicao(botao) {
@@ -110,16 +130,21 @@ async function carregarDadosEdicao(botao) {
     modal.dataset.id = id;
 
 
-    await fetch(`http://localhost/piqueraapi/api/buscar_contato.php?id=${id}`, {
-        method: 'GET',
-        credentials: "include"
-    })
-        .then(dados => dados.json())
-        .then(dados => {
-            document.querySelector("#input-nome-modal").value = dados.nome;
-            document.querySelector("#input-telefone-modal").value = dados.telefone;
 
-        });
+    try {
+        await fetch(`http://localhost/piqueraapi/api/buscar_contato.php?id=${id}`, {
+            method: 'GET',
+            credentials: "include"
+        })
+            .then(dados => dados.json())
+            .then(dados => {
+                document.querySelector("#input-nome-modal").value = dados.nome;
+                document.querySelector("#input-telefone-modal").value = dados.telefone;
+
+            });
+    } catch (erro) {
+        mostrarToast(erro);
+    }
 }
 
 
@@ -127,7 +152,6 @@ async function alterarDados() {
 
     const nomeEditar = document.getElementById("input-nome-modal").value;
     const telefoneEditar = document.getElementById("input-telefone-modal").value;
-
 
     const modalEdicao = document.getElementById("modal-confirmar"); // realizar a busca pelo modal que tem o ID do cliente
     const id = modalEdicao.dataset.id;
@@ -138,8 +162,6 @@ async function alterarDados() {
         telefone: telefoneEditar
     };
 
-
-
     try {
         const retorno = await fetch(`http://localhost/piqueraapi/api/alterar.php`, {
             method: 'PUT',
@@ -149,7 +171,7 @@ async function alterarDados() {
             },
             body: JSON.stringify(dados)
         });
-        
+
         const resposta = await retorno.json();
 
         if (!retorno.ok) {
@@ -164,17 +186,39 @@ async function alterarDados() {
         modal.hide();
         console.log(resposta.mensagem);
         mostrarToast(resposta.mensagem);
-        
 
     } catch (erro) {
-         console.error("Erro na requisição:", erro);
-
-        mostrarToast(resposta.mensagem);
+        mostrarToast(erro);
     }
 
 }
 
+async function excluirContato() {
+
+    try {
+        $respostaExclusao = await fetch(`http://localhost/piqueraapi/api/deletar.php?id=${idParaExcluir}`, {
+            method: 'DELETE',
+            credentials: "include"
+        });
+
+        $retornoExclusao = await $respostaExclusao.json();
+
+        if (!$respostaExclusao.ok) {
+            mostrarToast($retornoExclusao.mensagem);
+            return;
+        }
 
 
+        const elementoModalExclusao = document.getElementById("modal-confirmar-exclusao");
+        const modalExclusao = bootstrap.Modal.getInstance(elementoModalExclusao);
+        modalExclusao.hide();
 
+        mostrarToast($retornoExclusao.mensagem);
+        buscarDados();
+
+    } catch (error) {
+        mostrarToast(error);
+    }
+
+}
 

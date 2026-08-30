@@ -11,7 +11,8 @@ logar.addEventListener("click", async (e)=> {
         senha: senha
     };
 
-    const resposta = await fetch('http://localhost/piqueraapi/api/login.php',{
+    try {
+        const resposta = await fetch('http://localhost/piqueraapi/api/login.php',{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -22,9 +23,13 @@ logar.addEventListener("click", async (e)=> {
     const data = await resposta.json();
 
     if(resposta.ok && !data.erro){
-        window.location.href =  "index.html";
+        window.location.href =  "index.php";
         return;
     }
+    } catch (error) {
+        console.log(error);
+    }
+  
     
     alert(data.mensagem);
 });

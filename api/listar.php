@@ -10,7 +10,7 @@ $nome_json = $_GET['nome'] ?? null;
 $nome_json = trim($nome_json);
 
 
-if ($nome_json != null) {
+if ($nome_json != null ) {
   $nome = "%" . $nome_json . "%";
 
   $consuta_produtos = "SELECT * FROM contatos WHERE nome LIKE :nome";
@@ -19,13 +19,16 @@ if ($nome_json != null) {
   $dados_produtos->execute();
 
   if (($dados_produtos) && ($dados_produtos->rowCount() != 0)) {
+
+   $return = [];
+
     while ($linha_produto = $dados_produtos->fetch(PDO::FETCH_ASSOC)) {
-      extract($linha_produto);
+     
 
       $return[] = [
-        'id' => $id,
-        'nome' => $nome,
-        'telefone' => $telefone
+        'id' => $linha_produto['id'],
+        'nome' => $linha_produto['nome'],
+        'telefone' => $linha_produto['telefone']
       ];
     }
 
@@ -33,19 +36,19 @@ if ($nome_json != null) {
     echo json_encode($return);
   } else {
     $return = [
-      "erro" => false,
+      "ok" => false,
       "mensagem" => "Nada encontrado"
     ];
 
-    http_response_code(404);
+    http_response_code(200);
     echo json_encode($return);
   }
 } else {
   $return = [
-    "erro" => false,
+    "ok" => false,
     "mensagem" => "Digite alguma informação"
   ];
 
-  http_response_code(404);
+  http_response_code(200);
   echo json_encode($return);
 }

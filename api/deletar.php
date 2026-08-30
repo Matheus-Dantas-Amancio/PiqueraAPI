@@ -6,9 +6,9 @@ header("Content-Type: Application/json; charset=UTF-8");
 include_once '../config/conexao.php';
 
 $json_front = file_get_contents("php://input");
-$dados = json_decode($json_front, true);
+$dados_id = $_GET['id'] ?? null;
+$dados_id = trim($dados_id);
 
-$dados_id = $dados["id"];
 
 $sql = "SELECT * FROM contatos WHERE id = :id";
 $buscador = $conn->prepare($sql);
@@ -29,24 +29,24 @@ if($buscador->rowCount() != 0){
     if($exclusor->rowCount() != 0){
     
     $response = [
-        "Erro" => false,
-        "Mensagem" => "Dados excluidos com sucesso",
+        "erro" => false,
+        "mensagem" => "Dados excluidos com sucesso",
         "id" => $resultado["id"] ?? null,
         "nome" => $resultado["nome"] ?? null,
         "telefone" => $resultado["telefone"] ?? null
     ];
     }else{
         $response =[
-            "Erro" => true,
-            "Mensagem" => "Erro ao tentar excluir id:".($resultado["id"] ?? null)." e nome: ". ($resultado["nome"] != '' ? $resultado["nome"] :'Sem Nome' )
+            "erro" => true,
+            "mensagem" => "Erro ao tentar excluir id:".($resultado["id"] ?? null)." e nome: ". ($resultado["nome"] != '' ? $resultado["nome"] :'Sem Nome' )
         ];
     }
     
 
 }else{
     $response = [
-        "Erro" => true,
-        "Mensagem" => "Id não encontrado"
+        "erro" => true,
+        "mensagem" => "Id não encontrado"
     ];
 }
 
