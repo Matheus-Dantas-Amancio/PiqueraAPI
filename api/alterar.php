@@ -13,7 +13,7 @@ $dados_json = json_decode($json_front, true);
 
 
 $dados_limpos = limparDados($dados_json["nome"], $dados_json["telefone"]);
-$result_validar = validarExistencia($dados_limpos["nome"], $dados_limpos["telefone"]);
+$result_validar = validarVazio($dados_limpos["nome"], $dados_limpos["telefone"]);
 
 
 if (!$result_validar["Erro"]) {

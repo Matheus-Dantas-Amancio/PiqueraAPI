@@ -13,7 +13,7 @@ $dados = json_decode($json_front,true);
 http_response_code(200);
 
 $dados_limpos = limparDados($dados['nome'],$dados['telefone']); 
-$dados_existentes = validarExistencia($dados_limpos['nome'], $dados_limpos['telefone']);
+$dados_existentes = validarVazio($dados_limpos['nome'], $dados_limpos['telefone']);
 
 if($dados && !$dados_existentes['Erro']){
     $sql_comand = "INSERT INTO contatos (nome,telefone) VALUE (:nome, :telefone)";

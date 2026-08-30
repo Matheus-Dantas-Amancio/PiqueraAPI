@@ -74,7 +74,7 @@ if (!isset($_SESSION['usuario_id'])) {
                                 <td>Ações</td>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="dados-tabela">
                             
                         </tbody>
                     </table>

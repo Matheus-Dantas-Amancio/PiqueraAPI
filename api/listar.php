@@ -4,8 +4,6 @@ header("Content-Type: application/json; charset=UTF-8");
 
 include_once '../config/conexao.php';
 
-
-$json_front = file_get_contents("php://input");
 $nome_json = $_GET['nome'] ?? null;
 $nome_json = trim($nome_json);
 

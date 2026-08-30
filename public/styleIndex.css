@@ -128,3 +128,25 @@ h1{
     background-color: black !important;
     border: #2a00c4 2px solid !important;
 }
+
+
+@media (max-width: 768px) {
+
+    #tab {
+        width: 95vw;
+        margin-top: 5%;
+        padding: 10px;
+    }
+
+    #tabela-telefones {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    #tabela-telefones th,
+    #tabela-telefones td {
+        padding: 6px 3px;
+        word-break: break-word;
+    }
+
+}

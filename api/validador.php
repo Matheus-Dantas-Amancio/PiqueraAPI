@@ -9,8 +9,7 @@ function limparDados($nome, $telefone){
     return $resultado;
 }
 
-
-function validarExistencia($nome, $telefone){
+function validarVazio($nome, $telefone){
 
     if(!empty($nome) && !empty($telefone)){
         $result = [
